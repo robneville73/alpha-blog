@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :articles, dependent: :destroy
+  has_secure_password
+
   validates :username, 
             presence: true, 
             uniqueness: { case_sensitive: false }, 
@@ -12,9 +15,6 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false },
             format: { with: VALID_EMAIL_REGEX }
 
-  has_many :articles
-
   before_save { self.email = email.downcase }
 
-  has_secure_password
 end
